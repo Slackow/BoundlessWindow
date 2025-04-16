@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "id": "boundlesswindow",
+  "version": "${version}",
+  "name": "BoundlessWindow",
+  "description": "",
+  "authors": ["Slackow"],
+  "contact": {},
+  "license": "MIT",
+  "environment": "client",
+  "entrypoints": {},
+  "mixins": [
+    "boundlesswindow.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "minecraft": "*"
+  }
+}
