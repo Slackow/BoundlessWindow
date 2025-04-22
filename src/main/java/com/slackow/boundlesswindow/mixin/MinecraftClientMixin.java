@@ -4,6 +4,7 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.Window;
 import org.lwjgl.glfw.GLFW;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -25,7 +26,8 @@ import java.util.regex.Pattern;
 
 @Mixin(MinecraftClient.class)
 public abstract class MinecraftClientMixin {
-    @Shadow public abstract Window getWindow();
+
+    @Shadow @Final private Window window;
 
     @Unique
     private ServerSocketChannel serverChannel;
@@ -88,7 +90,6 @@ public abstract class MinecraftClientMixin {
     private String processCommand(String command) {
         command = command.trim();
         System.out.println("[Boundless Window] Processing: " + command);
-        Window window = getWindow();
         int oldX = window.getX();
         int oldY = window.getY();
         int oldWidth = window.getWidth();
