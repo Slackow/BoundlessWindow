@@ -18,22 +18,17 @@ public abstract class MinecraftClientMixin {
 
     @Shadow @Final private Window window;
 
-    @Shadow @Final public static boolean IS_SYSTEM_MAC;
     @Unique private WindowControlServer windowControlServer;
 
     @Inject(method = "<init>", at = @At("TAIL"))
     private void onInit(CallbackInfo ci) throws IOException {
-        if (IS_SYSTEM_MAC) {
-            windowControlServer = new WindowControlServer();
-            windowControlServer.init();
-        }
+        windowControlServer = new WindowControlServer();
+        windowControlServer.init();
     }
 
     @Inject(method = "tick", at = @At("TAIL"))
     public void tick(CallbackInfo info) {
-        if (IS_SYSTEM_MAC) {
-            windowControlServer.tick(window);
-        }
+        windowControlServer.tick(window);
     }
 
 }

@@ -9,6 +9,7 @@
     "MinecraftClientMixin",
     "WindowMixin"
   ],
+  "plugin": "com.slackow.boundlesswindow.MacOnlyMixinPlugin",
   "injectors": {
     "defaultRequire": 1
   }
