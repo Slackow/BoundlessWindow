@@ -37,7 +37,10 @@ public final class MacPresentationUtil {
             Path tmp = Files.createTempFile(base, ".dylib");
             Files.copy(in, tmp, StandardCopyOption.REPLACE_EXISTING);
             System.load(tmp.toAbsolutePath().toString());
-        } catch (IOException ignored) {}
+        } catch (IOException e) {
+            System.err.println("Failed to load native library: " + base);
+            e.printStackTrace();
+        }
     }
 
     private MacPresentationUtil() {}

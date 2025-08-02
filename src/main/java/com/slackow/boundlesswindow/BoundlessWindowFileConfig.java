@@ -88,7 +88,9 @@ public class BoundlessWindowFileConfig implements BoundlessWindowConfig {
         if (!saveIfNotExist) return config;
         try (Writer writer = Files.newBufferedWriter(path, StandardCharsets.UTF_8)) {
             GSON.toJson(config, writer);
-        } catch (IOException ignored) {
+        } catch (IOException e) {
+            System.err.println("Failed to save boundlesswindow.json");
+            e.printStackTrace();
         }
         return config;
     }
