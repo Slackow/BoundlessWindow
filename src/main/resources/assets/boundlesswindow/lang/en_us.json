@@ -1,0 +1,21 @@
+{
+  "speedrunapi.config.boundlesswindow.category.startup": "Startup Dimensions",
+  "speedrunapi.config.boundlesswindow.category.main": "ⓘ Options take effect on relaunch",
+
+  "speedrunapi.config.boundlesswindow.option.autoHideDock": "Auto Hide Dock",
+
+  "speedrunapi.config.boundlesswindow.option.autoHideMenubar": "Auto Hide Menubar",
+
+  "speedrunapi.config.boundlesswindow.option.removeTitlebar": "Remove Titlebar",
+  "speedrunapi.config.boundlesswindow.option.removeTitlebar.description": "This setting must be \"ON\" for Boat Eye",
+
+  "speedrunapi.config.boundlesswindow.option.startupResize": "Resize on Startup",
+  "speedrunapi.config.boundlesswindow.option.startupResize.value.FILL": "FILL SCREEN",
+  "speedrunapi.config.boundlesswindow.option.startupResize.value.OFF": "OFF",
+  "speedrunapi.config.boundlesswindow.option.startupResize.value.CUSTOM": "CUSTOM",
+
+  "speedrunapi.config.boundlesswindow.option.startupX": "Startup Window X",
+  "speedrunapi.config.boundlesswindow.option.startupY": "Startup Window Y",
+  "speedrunapi.config.boundlesswindow.option.startupWidth": "Startup Window Width",
+  "speedrunapi.config.boundlesswindow.option.startupHeight": "Startup Window Height"
+}

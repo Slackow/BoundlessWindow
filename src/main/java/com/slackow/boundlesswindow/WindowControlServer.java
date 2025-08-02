@@ -13,8 +13,10 @@ import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class WindowControlServer {
 
@@ -36,7 +38,10 @@ public class WindowControlServer {
         System.out.println("[Boundless Window] Boundless Window Socket open on port: " + port);
     }
 
+    int startupDelay = 20;
+
     public void tick(Window window) {
+        if (startupDelay-- == 0) startup(window);
         try {
             // Non-blocking
             int readyChannels = selector.selectNow();
@@ -107,5 +112,33 @@ public class WindowControlServer {
             return "Unrecognized command: '" + command + "', ex: (get; set - - 1000 16384)";
         }
         return window.getX() + " " + window.getY() + " " + window.getWidth() + " " + window.getHeight();
+    }
+
+    public void startup(Window window) {
+        if (BoundlessWindow.config.autoHideDock() || BoundlessWindow.config.autoHideMenubar()) {
+            long presentationOptions = 0;
+            if (BoundlessWindow.config.autoHideDock()) {
+                presentationOptions |= MacPresentationUtil.NSApplicationPresentationAutoHideDock;
+            }
+            if (BoundlessWindow.config.autoHideMenubar()) {
+                presentationOptions |= MacPresentationUtil.NSApplicationPresentationAutoHideMenuBar;
+            }
+            MacPresentationUtil.setPresentationOptions(presentationOptions);
+        }
+        int[] dimensions;
+        switch (BoundlessWindow.config.startupResize()) {
+            case FILL:
+                dimensions = MacPresentationUtil.visibleFrame();
+                break;
+            case CUSTOM:
+                BoundlessWindowConfig cfg = BoundlessWindow.config;
+                dimensions = new int[]{cfg.startupX(), cfg.startupY(), cfg.startupWidth(), cfg.startupHeight()};
+                break;
+            default:
+                return;
+        }
+        if (dimensions == null) return;
+        String command = "set " + Arrays.stream(dimensions).mapToObj(String::valueOf).collect(Collectors.joining(" "));
+        processCommand(command, window);
     }
 }
