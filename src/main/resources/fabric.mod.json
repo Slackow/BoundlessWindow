@@ -4,11 +4,22 @@
   "version": "${version}",
   "name": "BoundlessWindow",
   "description": "Removes the titlebar on macOS, enabling the window height to be resized without bound.",
-  "authors": ["Slackow"],
-  "contact": {"sources": "https://github.com/Slackow/BoundlessWindow"},
+  "authors": [
+    {
+      "name": "Slackow",
+      "contact": {
+        "homepage": "https://github.com/Slackow"
+      }
+    }
+  ],
+  "contact": {
+    "sources": "https://github.com/Slackow/BoundlessWindow",
+    "issues": "https://github.com/Slackow/BoundlessWindow/issues"
+  },
   "license": "MIT",
   "environment": "client",
   "entrypoints": {},
+  "icon": "icon.png",
   "mixins": [
     "boundlesswindow.mixins.json"
   ],
