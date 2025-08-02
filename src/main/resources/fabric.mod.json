@@ -20,11 +20,19 @@
   "environment": "client",
   "entrypoints": {},
   "icon": "icon.png",
+  "custom": {
+    "speedrunapi": {
+      "config": "com.slackow.boundlesswindow.BoundlessWindowSRApiConfig"
+    }
+  },
   "mixins": [
     "boundlesswindow.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=${loader_version}",
     "minecraft": ">=1.14"
+  },
+  "suggests": {
+    "speedrunapi": ">=2.0"
   }
 }

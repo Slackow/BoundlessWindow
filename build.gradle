@@ -26,7 +26,9 @@ dependencies {
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
     mappings "dev.tildejustin:yarn:${project.yarn_mappings}:v2"
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
-
+    // SpeedrunAPI
+    // check for the latest versions at https://jitpack.io/#contariaa/speedrunapi
+    modImplementation "com.github.contariaa:SpeedrunAPI:96811e85e8"
 }
 
 processResources {
@@ -49,13 +51,60 @@ tasks.withType(JavaCompile).configureEach {
     it.options.encoding = "UTF-8"
 }
 
+tasks.register('generateJniHeaders', Exec) {
+    description = 'Generate JNI headers for MacPresentationUtil'
+    group = 'build'
+    
+    dependsOn 'compileJava'
+    
+    inputs.files 'src/main/java/com/slackow/boundlesswindow/MacPresentationUtil.java'
+    outputs.file 'build/generated/sources/headers/java/main/com_slackow_boundlesswindow_MacPresentationUtil.h'
+    
+    doFirst {
+        file('build/generated/sources/headers/java/main').mkdirs()
+    }
+    
+    executable 'javac'
+    args '-h', 'build/generated/sources/headers/java/main'
+    args '-cp', sourceSets.main.output.classesDirs.asPath
+    args 'src/main/java/com/slackow/boundlesswindow/MacPresentationUtil.java'
+}
+
 java {
     sourceCompatibility = targetCompatibility = JavaVersion.VERSION_1_8
-    toolchain { languageVersion = JavaLanguageVersion.of(8)}
 }
 
 jar {
     from("LICENSE") {
         rename { "${it}_${project.archivesBaseName}" }
     }
+}
+
+
+tasks.register('buildMacUtilNative', Exec) {
+
+    description = 'Compile universal libmacutil.dylib for macOS'
+    group = 'build'
+
+    inputs.files  'src/native/MacUtilJNI.m'
+    outputs.file 'src/main/resources/natives/darwin/libmacutil.dylib'
+
+    dependsOn 'generateJniHeaders'
+
+    doFirst {
+        def jdkHome = System.getProperty('java.home')
+
+        commandLine 'clang',
+                '-std=gnu11', '-fobjc-arc', '-mmacosx-version-min=10.13',
+                '-arch', 'x86_64', '-arch', 'arm64',
+                '-Isrc/native', '-Ibuild/generated/sources/headers/java/main',
+                "-I${jdkHome}/include", "-I${jdkHome}/include/darwin",
+                '-framework', 'Cocoa',
+                '-dynamiclib', 'src/native/MacUtilJNI.m',
+                '-o', 'src/main/resources/natives/darwin/libmacutil.dylib'
+    }
+}
+
+tasks.named("processResources").configure {
+    dependsOn "buildMacUtilNative"
 }
