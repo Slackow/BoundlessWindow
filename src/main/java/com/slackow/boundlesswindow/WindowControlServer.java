@@ -41,7 +41,7 @@ public class WindowControlServer {
     int startupDelay = 20;
 
     public void tick(Window window) {
-        if (startupDelay-- == 0) startup(window);
+        if (startupDelay > 0 && --startupDelay == 0) startup(window);
         try {
             // Non-blocking
             int readyChannels = selector.selectNow();
