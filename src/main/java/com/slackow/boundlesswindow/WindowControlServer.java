@@ -6,6 +6,7 @@ import org.lwjgl.glfw.GLFW;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.nio.Buffer;
 import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
@@ -63,7 +64,7 @@ public class WindowControlServer {
                         key.cancel();
                         clientChannel.close();
                     } else {
-                        buffer.flip();
+                        ((Buffer) buffer).flip();
                         String command = new String(buffer.array(), 0, buffer.limit());
                         String response = processCommand(command, window) + "\n";
                         clientChannel.write(ByteBuffer.wrap(response.getBytes(StandardCharsets.UTF_8)));
