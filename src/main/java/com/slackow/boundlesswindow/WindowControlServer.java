@@ -77,6 +77,7 @@ public class WindowControlServer {
         }
     }
 
+    private boolean HAS_RESIZED = false;
 
     private static final Pattern setPattern = Pattern.compile("^set (-|-?\\d+) (-|-?\\d+) (-|\\d+) (-|\\d+)$");
 
@@ -99,6 +100,7 @@ public class WindowControlServer {
             int height = heightIn.equals("-") ? oldHeight : Integer.parseUnsignedInt(heightIn);
             if (width != oldWidth || height != oldHeight) {
                 GLFW.glfwSetWindowSize(window.getHandle(), width, height);
+                HAS_RESIZED = true;
             }
             if (xIn.equals("-") && width != oldWidth) {
                 x += (oldWidth - width)/2;
@@ -126,6 +128,8 @@ public class WindowControlServer {
             }
             MacPresentationUtil.setPresentationOptions(presentationOptions);
         }
+        // If an external program has already resized the window, skip the initial resize.
+        if (HAS_RESIZED) return;
         int[] dimensions;
         switch (BoundlessWindow.config.startupResize()) {
             case FILL:
