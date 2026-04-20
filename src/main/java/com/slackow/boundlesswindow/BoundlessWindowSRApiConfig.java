@@ -2,7 +2,7 @@ package com.slackow.boundlesswindow;
 
 import me.contaria.speedrunapi.config.api.SpeedrunConfig;
 import me.contaria.speedrunapi.config.api.annotations.Config;
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.Minecraft;
 
 import java.util.Optional;
 
@@ -48,8 +48,8 @@ public class BoundlessWindowSRApiConfig implements SpeedrunConfig, BoundlessWind
 
     private void setStartupResize(StartupResize startupResize) {
         this.startupResize = startupResize;
-        Optional.ofNullable(MinecraftClient.getInstance()).ifPresent(client ->
-                client.openScreen(client.currentScreen));
+        Optional.ofNullable(Minecraft.getInstance()).ifPresent(client ->
+                client.setScreen(client.screen));
     }
 
     @Override

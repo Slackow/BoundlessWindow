@@ -30,7 +30,7 @@
   ],
   "depends": {
     "fabricloader": ">=${loader_version}",
-    "minecraft": ">=1.14"
+    "minecraft": ">=26.1"
   },
   "suggests": {
     "speedrunapi": ">=2.0"

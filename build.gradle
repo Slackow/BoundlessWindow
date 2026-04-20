@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version "${loom_version}"
+    id 'net.fabricmc.fabric-loom' version "${loom_version}"
     id 'maven-publish'
 }
 
@@ -24,11 +24,10 @@ repositories {
 dependencies {
     // To change the versions see the gradle.properties file
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
-    mappings "dev.tildejustin:yarn:${project.yarn_mappings}:v2"
-    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    implementation "net.fabricmc:fabric-loader:${project.loader_version}"
     // SpeedrunAPI
     // check for the latest versions at https://jitpack.io/#contariaa/speedrunapi
-    modImplementation "com.github.contariaa:SpeedrunAPI:96811e85e8"
+    implementation "com.github.contariaa:SpeedrunAPI:96811e85e8"
 }
 
 processResources {
@@ -71,7 +70,7 @@ tasks.register('generateJniHeaders', Exec) {
 }
 
 java {
-    sourceCompatibility = targetCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = targetCompatibility = JavaVersion.VERSION_25
 }
 
 jar {

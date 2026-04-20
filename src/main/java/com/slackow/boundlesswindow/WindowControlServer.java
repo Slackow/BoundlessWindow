@@ -1,7 +1,7 @@
 package com.slackow.boundlesswindow;
 
+import com.mojang.blaze3d.platform.Window;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.client.util.Window;
 import org.lwjgl.glfw.GLFW;
 
 import java.io.IOException;
@@ -99,7 +99,7 @@ public class WindowControlServer {
             int width = widthIn.equals("-") ? oldWidth : Integer.parseUnsignedInt(widthIn);
             int height = heightIn.equals("-") ? oldHeight : Integer.parseUnsignedInt(heightIn);
             if (width != oldWidth || height != oldHeight) {
-                GLFW.glfwSetWindowSize(window.getHandle(), width, height);
+                GLFW.glfwSetWindowSize(window.handle(), width, height);
                 HAS_RESIZED = true;
             }
             if (xIn.equals("-") && width != oldWidth) {
@@ -109,7 +109,7 @@ public class WindowControlServer {
                 y += (oldHeight - height)/2;
             }
             if (x != oldX || y != oldY) {
-                GLFW.glfwSetWindowPos(window.getHandle(), x, y);
+                GLFW.glfwSetWindowPos(window.handle(), x, y);
             }
         } else if (!command.equals("get")) {
             return "Unrecognized command: '" + command + "', ex: (get; set - - 1000 16384)";
