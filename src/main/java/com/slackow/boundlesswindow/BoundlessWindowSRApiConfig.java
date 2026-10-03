@@ -49,7 +49,7 @@ public class BoundlessWindowSRApiConfig implements SpeedrunConfig, BoundlessWind
     private void setStartupResize(StartupResize startupResize) {
         this.startupResize = startupResize;
         Optional.ofNullable(Minecraft.getInstance()).ifPresent(client ->
-                client.setScreen(client.screen));
+                client.gui.setScreen(client.gui.screen()));
     }
 
     @Override
